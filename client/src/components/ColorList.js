@@ -21,23 +21,26 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const saveEdit = e => {
-    e.preventDefault();
     // Put request to save edit
+
     axiosWithAuth()
       .put(`/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
         setColorToEdit(res.data);
-        //  do we need push???
+        // refreshes page to show edits
+        push('/protected');
       })
+      .catch(err => console.log(err));
   };
 
   const deleteColor = color => {
     // make a delete request to delete this color
-
+    
     axiosWithAuth()
       .delete(`/colors/${color.id}`)
       .then(res => {
         console.log(res, 'delete res')
+        push('/protected');
       })
       .catch(err => console.log(err));
   };
